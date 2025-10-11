@@ -26,18 +26,80 @@ uv run python deploy-to-engine.py
 
 ### フォルダ構成
 ```
-src
-├── agent_app.py        # エージェントの実行
-├── config.py           # 設定ファイル
-├── deploy-to-engine.py # デプロイ
-├── planner_agent       # Agent本体
+agent_dir
+├── agent_app.py            # エージェントの実行
+├── credentials.json        # Google Cloud の認証情報
+├── deploy-to-engine.py     # デプロイ用スクリプト
+├── planner_agent           # Agent本体
 │   ├── __init__.py
-│   └── agent.py
-├── services
-│   └── gemini_service.py   # gemini 実行関数
-└── tools               # Agent が利用できるツール群
-    └── llm_tools.py    # Gemini (LLM) を使ったツール
+│   ├── agent.py            # root_agentの定義
+│   ├── config.py           # 設定ファイル
+│   ├── services            # 各種モジュール
+│   │   └── gemini_service.py
+│   └── tools               # Agent が利用できるツール群
+│       └── llm_tools.py    # Gemini (LLM) を使ったツール
+└── test.py
 ```
+
+## Mem0
+LLM アプリケーションの Memory Layer を構築できる OSS のフレームワーク  
+ローカル実行でデータの永続化を試す  
+
+### 環境構築
+1. データベース
+    - データ永続化用のベクトルデータベースに PostgreSQL (pgvector拡張) を使用  
+    - ローカル開発では docker でコンテナを起動
+    ```
+    cd memory
+    docker compose up -d
+    ```
+
+2. LLM/Embedding Model
+    - Vertex AI を利用。LLM は標準でインテグレーションが用意されていないので、litellm 経由で利用
+
+3. 上記を Mem0 インスタンス化時の `config` として設定
+```json
+config = {
+    "llm": {
+        "provider": "litellm",
+        "config": {
+            "model": "vertex_ai/gemini-2.5-flash",
+            "temperature": 0.0,
+            "max_tokens": 2000,
+        },
+    },
+    "embedder": {
+        "provider": "vertexai",
+        "config": {
+            "model": "gemini-embedding-001",
+            "embedding_dims": 1536,
+            "memory_add_embedding_type": "RETRIEVAL_DOCUMENT",
+            "memory_update_embedding_type": "RETRIEVAL_DOCUMENT",
+            "memory_search_embedding_type": "RETRIEVAL_QUERY"
+        },
+    },
+    "vector_store": {
+        "provider": "pgvector",
+        "config": {
+            "user": "dev_user",
+            "password": "dev_password",
+            "host": "localhost",
+            "port": "5432",
+        }
+    },
+}
+```
+
+### Memory の CRUD 操作
+[Python SDK Quickstart](https://docs.mem0.ai/open-source/python-quickstart#advanced)を参照  
+デフォルトでは、`postgres`データベースに以下のテーブルが作成される。
+
+| Schema | Name           | Type  | Owner    |
+|--------|----------------|-------|----------|
+| public | mem0           | table | dev_user |
+| public | mem0migrations | table | dev_user |
+
+mem0migrationsは変更履歴と考えられる。変更履歴は `.history()` で確認できる。
 
 
 ## 参考サイト
