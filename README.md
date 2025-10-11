@@ -111,6 +111,7 @@ mem0migrationsは変更履歴と考えられる。変更履歴は `.history()` �
 ### Mem0
 - [Python SDK Quickstart](https://docs.mem0.ai/open-source/python-quickstart#advanced)
 - [Pgvector](https://docs.mem0.ai/components/vectordbs/dbs/pgvector)
+- [REST API Server](https://docs.mem0.ai/open-source/features/rest-api#pull-from-docker-hub)
 
 ### Pgvector
 - [pgvectorとDockerでベクトルデータベースの実験環境構築](https://takumi-oda.com/blog/2025/04/27/post-4500/)
