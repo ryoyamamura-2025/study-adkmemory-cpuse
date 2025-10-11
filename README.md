@@ -41,6 +41,14 @@ src
 
 
 ## 参考サイト
+### Agent Development Kit
 - [クイックスタート: Agent Development Kit でエージェントをビルドする](https://cloud.google.com/vertex-ai/generative-ai/docs/agent-development-kit/quickstart?hl=ja)
 - [【超速報】Agent Development Kit で会話型エージェントを作成する](https://zenn.dev/google_cloud_jp/articles/1b1cbd5318bdfe)
 - [Agent Development Kitによるエージェント開発入門](https://speakerdeck.com/enakai00/agent-development-kit-niyoruezientokai-fa-ru-men) 
+
+### Mem0
+- [Python SDK Quickstart](https://docs.mem0.ai/open-source/python-quickstart#advanced)
+- [Pgvector](https://docs.mem0.ai/components/vectordbs/dbs/pgvector)
+
+### Pgvector
+- [pgvectorとDockerでベクトルデータベースの実験環境構築](https://takumi-oda.com/blog/2025/04/27/post-4500/)
