@@ -58,7 +58,7 @@ LLM アプリケーションの Memory Layer を構築できる OSS のフレー
     - Vertex AI を利用。LLM は標準でインテグレーションが用意されていないので、litellm 経由で利用
 
 3. 上記を Mem0 インスタンス化時の `config` として設定
-```json
+```
 config = {
     "llm": {
         "provider": "litellm",
