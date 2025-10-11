@@ -13,10 +13,16 @@ uv sync
 
 ### 実行方法
 - Web UI: srcディレクトリ直下で `uv run adk web`   
-- Terminal: srcディレクトリ直下で `uv run python agent_execute.py`   
+- Terminal: srcディレクトリ直下で `uv run python agent_app.py`   
+    - Local か Remote かでスクリプトを変えること
+    - Remote の場合は リソースID を環境変数に設定すること
 
 ### デプロイ
-
+デプロイする Agent に設定を変更して実行
+```
+cd src
+uv run python deploy-to-engine.py 
+```
 
 ### フォルダ構成
 ```

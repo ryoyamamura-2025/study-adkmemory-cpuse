@@ -7,6 +7,7 @@ from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 import vertexai
+from vertexai import agent_engines
 
 from planner_agent.agent import planning_client_agent
 from planner_agent.config import APPCONFIG
@@ -95,8 +96,33 @@ class RemoteApp:
         return None # Permanent error
 
 
+def check_resources():
+    """Check and list all agent resources."""
+    print("Checking agent resources...")
+
+    agents = list(agent_engines.list())
+
+    if not agents:
+        print("No agent resources found.")
+        return
+
+    print(f"Found {len(agents)} agent(s):")
+    for agent in agents:
+        print(f"  - {agent.resource_name}")
+        # Display available attributes
+        try:
+            if hasattr(agent, "display_name"):
+                print(f"    Display name: {agent.display_name}")
+            if hasattr(agent, "create_time"):
+                print(f"    Created: {agent.create_time}")
+            if hasattr(agent, "update_time"):
+                print(f"    Updated: {agent.update_time}")
+        except Exception as e:
+            print(f"    (Unable to retrieve details: {e})")
+
+
 # client = LocalApp(planning_client_agent)
-agent_engine = vertexai.agent_engines.get('projects/897239585193/locations/us-central1/reasoningEngines/6959983370612768768')
+agent_engine = agent_engines.get(APPCONFIG.AGENT_RESOURCE_ID)
 client = RemoteApp(agent_engine)
 # query = "AI開発における2日間の中学生の職場見学会の計画"
 
@@ -109,4 +135,4 @@ if __name__ == '__main__':
         if user_input == 'exit':
             break
         main(user_input.strip())
-        # asyncio.run(main(user_input.strip()))
+    #     # asyncio.run(main(user_input.strip()))
