@@ -1,7 +1,7 @@
 import json
 from google.genai import types
 
-import services.gemini_service as gem
+from ..services import gemini_service as gem
 
 # 企画生成
 def _generate_plan(goal):

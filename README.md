@@ -15,11 +15,15 @@ uv sync
 - Web UI: srcディレクトリ直下で `uv run adk web`   
 - Terminal: srcディレクトリ直下で `uv run python agent_execute.py`   
 
+### デプロイ
+
+
 ### フォルダ構成
 ```
 src
-├── agent_execute.py    # エージェントの実行
+├── agent_app.py        # エージェントの実行
 ├── config.py           # 設定ファイル
+├── deploy-to-engine.py # デプロイ
 ├── planner_agent       # Agent本体
 │   ├── __init__.py
 │   └── agent.py
@@ -28,6 +32,7 @@ src
 └── tools               # Agent が利用できるツール群
     └── llm_tools.py    # Gemini (LLM) を使ったツール
 ```
+
 
 ## 参考サイト
 - [クイックスタート: Agent Development Kit でエージェントをビルドする](https://cloud.google.com/vertex-ai/generative-ai/docs/agent-development-kit/quickstart?hl=ja)

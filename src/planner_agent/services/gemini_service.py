@@ -2,7 +2,7 @@ import os
 from google import genai
 from google.genai import types
 
-from config import APPCONFIG
+from ..config import APPCONFIG
 
 def generate_response(system_instruction, contents,
                       response_schema, model='gemini-2.5-flash'):
