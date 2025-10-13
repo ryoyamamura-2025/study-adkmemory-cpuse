@@ -1,0 +1,14 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+class Config:
+    GOOGLE_APPLICATION_CREDENTIALS = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+    GOOGLE_CLOUD_PROJECT = os.getenv('GOOGLE_CLOUD_PROJECT')
+    GOOGLE_CLOUD_LOCATION = os.getenv('GOOGLE_CLOUD_LOCATION')
+    GOOGLE_GENAI_USE_VERTEXAI=os.getenv('GOOGLE_GENAI_USE_VERTEXAI')
+    GOOGLE_CLOUD_BUCKET = os.getenv('GOOGLE_CLOUD_BUCKET')
+    AGENT_RESOURCE_ID = os.getenv('AGENT_RESOURCE_ID')
+
+APPCONFIG = Config()
