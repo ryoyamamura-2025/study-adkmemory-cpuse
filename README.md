@@ -44,6 +44,7 @@ agent_dir
 ## Mem0
 LLM アプリケーションの Memory Layer を構築できる OSS のフレームワーク  
 ローカル実行でデータの永続化を試す  
+コードは `memory` に配置
 
 ### 環境構築
 1. データベース
@@ -101,12 +102,38 @@ config = {
 
 mem0migrationsは変更履歴と考えられる。変更履歴は `.history()` で確認できる。
 
+## Vertex AI Memory Bank 
+Google が提供する Agent の長期記憶のためのマネージドサービス  
+ADK における状態・記憶[一番わかり易い解説記事](https://cloud.google.com/blog/ja/topics/developers-practitioners/remember-this-agent-state-and-memory-with-adk)と[実装例](https://github.com/GoogleCloudPlatform/devrel-demos/tree/main/ai-ml/python-tutor)  
+`agent_dir/python_tutor_agent`配下で実装
+
+### 環境構築
+Memory Bank を利用するには Vertex AI Agent Engine が前提。  
+`deploy-to-engine.py` を参考に Agent を指定しない空の Engine をデプロイし、そこに Memory だけ保存していく
+あとの実装は上記記事とコードを参照
+
+### Context/Session/State/Event 等についてのメモ
+Agent は一連のやり取りを Context という Object で管理している。  
+Context が最上位の（最も多くの）情報を持った Object。Context には、Session が含まれており、Session には State や Event が含まれる。  
+
+以下は Session Object の例
+```
+id='199ccf11-5f89-4632-bb3d-00226a6d381d' app_name='python_tutor_agent' user_id='user' 
+state={'hoge': 'hogehoge', 'fuga': 'fugafuga, ...} 
+events=[
+    Event(content=Content(parts=[Part(text='こんにちは'),], role='user'),...,
+    Event(content=Content(parts=[Part(text="""こんにちは、ジョンさん！😊 お帰りなさい！✨まず、ジョンさんのお名前を記憶させてくださいね。""",…,
+                                 Part(function_call=FunctionCall(args={'name': 'John'}, id='XXX', name='set_user_name')),], role='model'),...,
+]
+...
+```
 
 ## 参考サイト
 ### Agent Development Kit
 - [クイックスタート: Agent Development Kit でエージェントをビルドする](https://cloud.google.com/vertex-ai/generative-ai/docs/agent-development-kit/quickstart?hl=ja)
 - [【超速報】Agent Development Kit で会話型エージェントを作成する](https://zenn.dev/google_cloud_jp/articles/1b1cbd5318bdfe)
 - [Agent Development Kitによるエージェント開発入門](https://speakerdeck.com/enakai00/agent-development-kit-niyoruezientokai-fa-ru-men) 
+- [ADK を使用したエージェントの状態と記憶](https://cloud.google.com/blog/ja/topics/developers-practitioners/remember-this-agent-state-and-memory-with-adk)
 
 ### Mem0
 - [Python SDK Quickstart](https://docs.mem0.ai/open-source/python-quickstart#advanced)
@@ -115,3 +142,5 @@ mem0migrationsは変更履歴と考えられる。変更履歴は `.history()` �
 
 ### Pgvector
 - [pgvectorとDockerでベクトルデータベースの実験環境構築](https://takumi-oda.com/blog/2025/04/27/post-4500/)
+
+### Memory Bank
