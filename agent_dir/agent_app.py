@@ -130,9 +130,10 @@ def main(query):
     _ = client.stream(query, debug=True)
 
 if __name__ == '__main__':
-    while True:
-        user_input = input("input: ")
-        if user_input == 'exit':
-            break
-        main(user_input.strip())
-    #     # asyncio.run(main(user_input.strip()))
+    check_resources()
+    # while True:
+    #     user_input = input("input: ")
+    #     if user_input == 'exit':
+    #         break
+    #     main(user_input.strip())
+    # #     # asyncio.run(main(user_input.strip()))

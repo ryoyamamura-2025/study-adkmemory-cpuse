@@ -13,17 +13,22 @@ vertexai.init(
     staging_bucket=f"gs://{APPCONFIG.GOOGLE_CLOUD_BUCKET}",
 )
 
-remote_planner_agent = agent_engines.create(
-    agent_engine=planning_client_agent,
-    display_name="planning_client_agent",
-    description="プランの生成、更新、評価機能を持つ専門家LLMをツールとして使うAgent",
-    requirements=[
-        'google-adk==1.4.1',
-        'google-cloud-aiplatform==1.97.0',
-        'google-genai==1.20.0',
-        'python-dotenv'
-    ],
-    extra_packages=[
-        "./planner_agent"
-    ]
+# remote_planner_agent = agent_engines.create(
+#     agent_engine=planning_client_agent,
+#     display_name="planning_client_agent",
+#     description="プランの生成、更新、評価機能を持つ専門家LLMをツールとして使うAgent",
+#     requirements=[
+#         'google-adk==1.4.1',
+#         'google-cloud-aiplatform==1.97.0',
+#         'google-genai==1.20.0',
+#         'python-dotenv'
+#     ],
+#     extra_packages=[
+#         "./planner_agent"
+#     ]
+# )
+
+remote_memory_bank = agent_engines.create(
+    display_name="memory_bank_test",
+    description="Memory Bankのテスト用",
 )
