@@ -8,5 +8,8 @@ dependencies = [
     "google-adk>=1.16.0",
     "google-cloud-aiplatform>=1.120.0",
     "google-genai>=1.43.0",
+    "litellm>=1.78.0",
+    "mem0ai>=0.1.118",
+    "psycopg2-binary>=2.9.11",
     "python-dotenv>=1.1.1",
 ]

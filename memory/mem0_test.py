@@ -44,13 +44,13 @@ messages = [
 ]
 
 # Store inferred memories (default behavior)
-# result = m.add(messages, user_id="alice", metadata={"category": "movie_recommendations"})
+result = m.add(messages, user_id="alice", metadata={"category": "movie_recommendations"})
 
 # Store memories with agent and run context
-# result = m.add(messages, user_id="alice", agent_id="movie-assistant", run_id="session-001", metadata={"category": "movie_recommendations"})
+result = m.add(messages, user_id="alice", agent_id="movie-assistant", run_id="session-001", metadata={"category": "movie_recommendations"})
 
 # Store raw messages without inference
-# result = m.add(messages, user_id="alice", metadata={"category": "movie_recommendations"}, infer=False)
+result = m.add(messages, user_id="alice", metadata={"category": "movie_recommendations"}, infer=False)
 
 all_memories = m.get_all(user_id="alice")
 print(all_memories)

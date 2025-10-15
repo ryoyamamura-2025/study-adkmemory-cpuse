@@ -102,6 +102,39 @@ config = {
 
 mem0migrationsは変更履歴と考えられる。変更履歴は `.history()` で確認できる。
 
+DB の中身は以下のコマンドで確認
+```
+# Memory 保存時に db 名を指定しなければ postgres DB にデータが入る
+docker exec -it postgres-pgvector psql -U dev_user -d postgres
+
+postgres=# select column_name from information_schema.columns where table_name='mem0';
+```
+
+スキーマは以下
+```
+postgres=# \d mem0
+                   Table "public.mem0"
+ Column  |     Type     | Collation | Nullable | Default 
+---------|--------------|-----------|----------|---------
+ id      | uuid         |           | not null | 
+ vector  | vector(1536) |           |          | 
+ payload | jsonb        |           |          | 
+Indexes:
+    "mem0_pkey" PRIMARY KEY, btree (id)
+    "mem0_hnsw_idx" hnsw (vector vector_cosine_ops)
+```
+
+`paylod` には以下のように JSON が格納されている
+```json
+{
+    "data": "Not a big fan of thriller movies",
+    "hash": "028dfab4483f28980e292f62578d3293", 
+    "user_id": "alice", 
+    "category": "movie_recommendations", 
+    "created_at": "2025-10-15T05:36:52.921226-07:00"
+}
+```
+
 ## Vertex AI Memory Bank 
 Google が提供する Agent の長期記憶のためのマネージドサービス  
 ADK における状態・記憶[一番わかり易い解説記事](https://cloud.google.com/blog/ja/topics/developers-practitioners/remember-this-agent-state-and-memory-with-adk)と[実装例](https://github.com/GoogleCloudPlatform/devrel-demos/tree/main/ai-ml/python-tutor)  
@@ -142,5 +175,3 @@ events=[
 
 ### Pgvector
 - [pgvectorとDockerでベクトルデータベースの実験環境構築](https://takumi-oda.com/blog/2025/04/27/post-4500/)
-
-### Memory Bank
